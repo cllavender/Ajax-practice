@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          
   has_many :posts
+  has_many :likes, :dependent => :destroy
+  has_many :liked_posts, :through => :likes, :source => :post
   
   def display_name
     self.email.split("@").first
