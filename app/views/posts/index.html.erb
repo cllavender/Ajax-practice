@@ -1,3 +1,4 @@
+
 <%= form_for Post.new, :remote => true do |f| %>
     <div class="form-group">
         <%= f.text_area :content, :class => "form-control" %>
@@ -15,6 +16,24 @@
 </div>
 
 <script>
+
+    var current_post_id = <%= @posts.last.id %>;
+    
+    $(window).scroll(function(){
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            var url = "/posts?max_id=" + current_post_id;
+            if (url){
+                $.ajax({
+                    method: "GET",
+                    url: url,
+                    dataType: "script"
+                })
+            }else{
+                console.log("data ended")
+            }
+        }
+    })
+
     $(".delete-post").click(function(evt){
         evt.preventDefault();
         var url = $(this).attr("href");
