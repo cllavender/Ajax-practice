@@ -16,6 +16,9 @@ class PostsController < ApplicationController
         @post = current_user.posts.find(params[:id])
         @post.destroy
         
+        render :json => { :id => @post.id }
+
+        
     end
     
     def like
